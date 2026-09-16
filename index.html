@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Menu</title>
+</head>
+
+<body>
+
+    <h1>Menu</h1>
+
+    <button onclick="loadProducts()">Load Menu</button>
+
+    <br><br>
+
+    <input
+        type="text"
+        id="searchBox"
+        placeholder="Search products..."
+        oninput="searchProducts()"
+    >
+
+    <ul id="productList"></ul>
+
+    <script>
+        async function loadProducts(){
+
+            const response = await fetch("api/products");
+            const products = await response.json();
+
+            renderProducts(products);
+        }
+
+        async function searchProducts(){
+
+            const query = document.getElementById("searchBox").value;
+
+            const response = await fetch("api/products/search?q=" + encodeURIComponent(query));
+            const products = await response.json();
+
+            renderProducts(products);
+        }
+
+        function renderProducts(products){
+
+            const list = document.getElementById("productList");
+
+            list.innerHTML = "";
+
+            if(products.length === 0){
+                const item = document.createElement("li");
+                item.textContent = "No products found";
+                list.appendChild(item);
+                return;
+            }
+
+            products.forEach(product=>{
+                const item = document.createElement("li");
+
+                item.textContent =
+                    product.food + " - ₱" + product.price;
+
+                list.appendChild(item);
+
+            });
+        }
+
+    </script>
+
+
+</body>
+</html>
