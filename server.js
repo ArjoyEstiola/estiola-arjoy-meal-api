@@ -6,11 +6,21 @@ const PORT = 3000;
 
 // Add your own products here. Each product needs: id, food, price
 const products = [
-    // {
-    //     id: 1,
-    //     food: "Adobo",
-    //     price: 89
-    // },
+    {
+        id: 1,
+        food: "Adobo",
+        price: 89
+    },
+    {
+        id: 2,
+        food: "FriedChicken",
+        price: 89
+    },
+        {
+        id: 3,
+        food: "ABurger",
+        price: 89
+    },
 ];
 
     //Retrieve all products
@@ -18,11 +28,6 @@ const products = [
         res.json(products);
     });
 
-    //Search products by food name (case-insensitive, partial match)
-    //e.g. /api/products/search?q=chicken
-    //NOTE: this must be declared BEFORE /api/products/:id, otherwise
-    //Express would treat "search" as an :id value and this route
-    //would never be reached.
     app.get("/api/products/search", (req, res) => {
         const query = (req.query.q || "").toLowerCase().trim();
 
